@@ -4,7 +4,7 @@ cert-manager joined the CNCF as a sandbox project just over a year ago, and we f
 
 cert-manager provides reliable, automated Kubernetes-native management of X.509 certificates. It reduces the risk of certificate-related outages and enables PKI at scale, and is treated by many teams as de-facto part of the core components of a Kubernetes or OpenShift deployment.
 
-The project comprises cert-manager itself - which adds Kubernetes Custom Resource Definitions (CRDs) for certificate-related concepts, and provides controllers to manage them - along with a selection of subprojects which focus on solving other issues relating to certificate management in cloud native environments. We'll primarily discuss cert-manager in this proposal, although we do intend to keep developing the other projects, all of which tie into cert-manager.
+The wider project comprises cert-manager itself - which adds Kubernetes Custom Resource Definitions (CRDs) for certificate-related concepts, and provides controllers to manage them - along with a selection of subprojects which focus on solving other issues relating to certificate management in cloud native environments. That said, and for the avoidance of doubt, we're only proposing cert-manager itself - the main repo - for incubation in this document.
 
 The main cert-manager repo has 8.4k stars on GitHub and hundreds of projects downstream which depend on cert-manager code in some way. Thousands of people have contributed to the project in some way and cert-manager's use and prominence remains strong.
 
@@ -105,6 +105,8 @@ The cert-manager GitHub org also includes a variety of subprojects which help wi
 
 Looking forward, we believe there's a lot of potential for the `trust` project. We believe many clusters will lack a coherent overview of their exposure related to
 TLS trust, and the project's experience with TLS leads to a great opportunity for us to help with this issue.
+
+NB: These tools are part of the wider cert-manager project but are not explicitly part of the application for incubation. We mention them as potential areas for future development for the project, and all of the tools touch on cert-manager in some way.
 
 ## Summary
 
