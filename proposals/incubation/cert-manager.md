@@ -4,7 +4,7 @@ cert-manager joined the CNCF as a sandbox project just over a year ago, and we f
 
 cert-manager provides reliable, automated Kubernetes-native management of X.509 certificates. It reduces the risk of certificate-related outages and enables PKI at scale, and is treated by many teams as de-facto part of the core components of a Kubernetes or OpenShift deployment.
 
-The project comprises cert-manager itself - which adds Kubernetes Custom Resource Definitions (CRDs) for certificate-related concepts, and provides controllers to manage them - along with a selection of subprojects which focus on solving other issues relating to certificate management.
+The project comprises cert-manager itself - which adds Kubernetes Custom Resource Definitions (CRDs) for certificate-related concepts, and provides controllers to manage them - along with a selection of subprojects which focus on solving other issues relating to certificate management in cloud native environments. We'll primarily discuss cert-manager in this proposal, although we do intend to keep developing the other projects, all of which tie into cert-manager.
 
 The main cert-manager repo has 8.4k stars on GitHub and hundreds of projects downstream which depend on cert-manager code in some way. Thousands of people have contributed to the project in some way and cert-manager's use and prominence remains strong.
 
@@ -14,11 +14,15 @@ Based on the [graduation criteria][GraduationCriteria], cert-manager seems to cl
 
 ### Production Use
 
-> Document that it is being used successfully in production by at least three independent end users
+> Document that it is being used successfully in production by at least three independent end users which, in the TOC’s judgement, are of adequate quality and scope.
 
 cert-manager is used in production by _many_ more than three independent end users. Several major cloud native projects including [Istio][IstioCertManager], the [Kubernetes Cluster API][ClusterAPICertManager] and [Knative][KnativeCertManager] either suggest or require that cert-manager be installed.
 
-Walmart uses cert-manager too, and mentioned it in a [Keynote speech they gave][WalmartKeynote].
+Some other prominent examples include:
+
+- The CNCF project ArgoCD uses cert-manager in its [demo instance][ArgoDemoInstance],
+- Walmart, who mentioned it in a [Keynote speech they gave][WalmartKeynote],
+- Render, who gave a great talk on cert-manager at [cert-manager Community Day 2020][RenderTalk]
 
 According to the [companies-table DevStats dashboard][CompaniesTable] over a thousand different companies (plus ~1330 "Independents") have made some kind of contribution (defined as somebody who made a review, comment, commit, created PR or issue) to cert-manager. That implies that the floor of cert-manager's reach can be measured in the thousands, but there could be many more users who happily use cert-manager without contributing back or raising GitHub issues.
 
@@ -29,21 +33,21 @@ In addition we might measure some production use through the many large companie
 - at least [49 public repositories][ExternalDNSSolvers] implementing an external ACME DNS-01 solver
 - at least [8 public repositories][ExternalIssuers] implementing complete external issuers for certificates
 
-Finally, we track a few users in a [USERS.md file][USERSmd] on our repository, although that file doesn't fully represent the scale of cert-manager's prominence in clusters today.
+Finally, we offer a place for users to identify themselves in a [USERS.md file][USERSmd] on our repository.
 
 ### Committer Numbers
 
-> Have a healthy number of committers
+> Have a healthy number of committers. A committer is defined as someone with the commit bit; i.e., someone who can accept contributions to some or all of the project.
 
-cert-manager currently has 9 maintainers across 3 organisations. Community contributions from many different organizations are very common and gladly received.
+cert-manager currently has 9 maintainers across 3 organisations, any of whom can accept changes to the codebase. Community contributions from many different organizations are very common and gladly received. The majority of the maintainers are part of the Jetstack cert-manager team, which has the open source cert-manager project as one of its primary focus points, although there are 2 other maintainers from other organizations - one at Apple, one at Thomas More University in Belgium.
 
-The [companies-table DevStats dashboard][CompaniesTable] is illustrative. We've seen:
+The [companies-table DevStats dashboard][CompaniesTable] is illustrative of the number of committers and contributors we have. We've seen:
 
 - 4 different companies which have made over a thousand contributions each,
 - 8 different companies which have made over a hundred contributions each,
 - and over a thousand different companies which have contributed something to the project.
 
-In 2021, cert-manager saw [102 new first-time-contributors][NewContributors2021] to the project. Drilling down, cert-manager v1.7 saw at least 7 different individual community contributors, and one of the major features in that release was [contributed by a community member][ReleaseNotes17].
+In 2021, cert-manager saw [102 new first-time-contributors][NewContributors2021] to the project. Our latest release as of creating this proposal, cert-manager v1.7, saw at least 7 different individual community contributors, and one of the major features in that release was [contributed by a community member][ReleaseNotes17].
 
 2022 has started strongly too; at the time of writing there have been [21 new contributors][NewContributors2022] already in this calendar year.
 
@@ -53,35 +57,41 @@ In terms of code changes only and ignoring other types of contribution, we see a
 
 > Demonstrate a substantial ongoing flow of commits and merged contributions
 
-All recent releases of cert-manager have included major features contributed by both the core maintainer team and community members, driven by a contiuous flow of commits every month.
+All recent releases of cert-manager have included major features contributed by both the core maintainer team and community members, driven by a continuous flow of commits every month.
 
 Looking at CNCF DevStats, cert-manager saw an average of [39 pull requests opened][AvgOpenedPRsCertManager] per month in the 6 months before February 2022 (excluding bots), with an average of [30 PRs merged per month][AvgMergedPRsCertManager] in the same time period.
 
-The above numbers only count the main cert-manager repo; as mentioned previously, there are several cert-manager subprojects being regularly worked on too, including the cert-manager website.
-
-Across all repos we see an average of [78 merged PRs][AvgMergedPRsAllRepos] per month in the same time period as above.
+The above numbers only count the main cert-manager repo; as mentioned previously, there are several cert-manager subprojects being regularly worked on too, including the cert-manager website. Across all repos we see an average of [78 merged PRs][AvgMergedPRsAllRepos] per month in the same time period as above.
 
 ### Versioning
 
 > A clear versioning scheme
 
-cert-manager has had a clear versioning scheme and a regular release cadence for over a year. Details can be seen on the cert-manager website under our [Supported Releases][] page, which documents full and clear support lifecycles for the main cert-manager project. We broadly use SemVer.
+cert-manager has had a clear versioning scheme and a regular release cadence for over a year. Details can be seen on the cert-manager website under our [Supported Releases][] page, which documents full and clear support lifecycles for the main cert-manager project. The versioning scheme is similar to Kubernetes in that we try to avoid making any breaking changes wherever possible but if we do have to make a breaking change, we don't do so without signposting that the change is coming for several versions.
 
-Being closely tied to Kubernetes, cert-manager also makes great efforts to be clear which versions of Kubernetes itself are supported by a given version of cert-manager.
+Being closely tied to Kubernetes, cert-manager also makes great efforts to be clear which versions of Kubernetes it is compatible with.
 
 ### Security Process
 
-> Clearly documented security processes explaining how to report security issues
+> Clearly documented security processes explaining how to report security issues to the project, and describing how the project provides updated releases or patches to resolve security vulnerabilities
 
 A security reporting mechanism was added in 2021 with a clear [security process][] and a dedicated email address: `cert-manager-security@googlegroups.com`. This security policy applies to all subprojects under the cert-manager umbrella too.
+
+Our security process states that we'll aim to reply to any reports as soon as we possibly can and that we'll try to formulate a plan of action within 24 hours of acknowledging the report.
 
 ## The cert-manager Project
 
 ### Encouraging Open Source
 
-We endeavour to help people where possible to contribute to the project. We marked some of our repos for [Hacktoberfest](https://hacktoberfest.digitalocean.com/) to encourage contributions, and two of our maintainers mentored Google Summer of Code projects in 2021.
+We endeavour to help people to contribute to cert-manager and to open source more widely, including:
+
+- Two of our maintainers mentoring Google Summer of Code projects in 2021, with ambitions to get involved with GSoC 2022 too.
+- Marking some of our repos for [Hacktoberfest](https://hacktoberfest.digitalocean.com/) for visibility
+- Trying to find "good first issues" and mark them where possible, making it easier for new contributors to get started
 
 We've run regular community meetings for years, too; daily standups are open to the public to join, and we also run a community meeting every other week which gives anyone a chance to participate. We're proud that some people have chosen to make their first ever open-source commits to the cert-manager project.
+
+For support we maintain a [cert-manager-dev](https://groups.google.com/g/cert-manager-dev) Google group, and we're very active on Slack to help people out, too.
 
 ### Subprojects
 
@@ -108,8 +118,10 @@ We're really looking forward to getting started with the process and we're keen 
 [DevStatsCertManager]: https://github.com/cncf/devstats#architecture
 [ClusterAPICertManager]: https://cluster-api.sigs.k8s.io/developer/guide.html#cert-manager
 [KnativeCertManager]: https://knative.dev/development/install/serving/installing-cert-manager/
+[ArgoDemoInstance]: https://cd.apps.argoproj.io/applications/cert-manager
 [WalmartKeynote]: https://www.youtube.com/watch?v=sfPFrvDvdlk&t=709s
-[UsersMD]: https://github.com/cert-manager/cert-manager/blob/0860a4141b99412ae32c0d13d5939fbbe3d82159/USERS.md
+[RenderTalk]: https://youtu.be/XlkGsBGk9W4
+[UsersMD]: https://github.com/cert-manager/cert-manager/blob/5f5ba9eff67a5a8b23ef2b88bc4403c20ead979e/USERS.md
 
 [ExternalDNSSolvers]: https://github.com/topics/cert-manager-webhook
 [ExternalIssuers]: https://cert-manager.io/docs/configuration/external/
@@ -130,7 +142,7 @@ We're really looking forward to getting started with the process and we're keen 
 [AvgMergedPRsAllRepos]: https://certmanager.devstats.cncf.io/d/24/prs-merged-repository-groups?orgId=1&var-period=m&var-repogroups=%22cert-manager%22&from=1625094000000&to=1643673599000
 
 [Supported Releases]: https://cert-manager.io/docs/installation/supported-releases/
-[security process]: https://github.com/cert-manager/cert-manager/blob/3191293cb8b475f94aa9f4c843178039c5bb6a48/SECURITY.md
+[security process]: https://github.com/cert-manager/cert-manager/blob/5f5ba9eff67a5a8b23ef2b88bc4403c20ead979e/SECURITY.md
 [istio-csr]: https://github.com/cert-manager/istio-csr
 [approver-policy]: https://github.com/cert-manager/approver-policy
 [csi-driver]: https://github.com/cert-manager/csi-driver
